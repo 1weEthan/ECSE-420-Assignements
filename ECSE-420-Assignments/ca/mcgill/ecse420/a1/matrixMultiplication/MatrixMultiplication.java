@@ -55,7 +55,6 @@ public class MatrixMultiplication {
 			}
 		}
 		return result;
-
 	}
 	
 	/**

@@ -1,3 +1,5 @@
+package ca.mcgill.ecse420.a1;
+
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import java.util.concurrent.ExecutorService;
@@ -5,8 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class DeadlockLibrary {
-
-
 
     public static void main(String[] args) {
         Library lib = new Library();
@@ -37,25 +37,29 @@ public class DeadlockLibrary {
 
         public void borrowBookandManga() {
             bookLock.lock(); // Acquire the lock
+            System.out.println(Thread.currentThread().getName() + ": Locked Book");
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {}
-            mangaLock.lock(); // try to grab mangaLock
+            mangaLock.lock(); // try to grab mangaLock (DEADLOCK HERE)
+            System.out.println(Thread.currentThread().getName() + ": Locked Manga");
 
-            //reading time (DEADLOCK HERE)
+            //reading time
             mangaLock.unlock();
-            bookLock.unlock();
+            bookLock.unlock(); // return the book
 
         }
         public void borrowMangaandBook() {
             mangaLock.lock(); // Acquire the lock
+            System.out.println(Thread.currentThread().getName() + ": Locked Manga");
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {}
-            bookLock.lock(); // try to grab bookLock
+            bookLock.lock(); // try to grab bookLock (DEADLOCK HERE)
+            System.out.println(Thread.currentThread().getName() + ": Locked Book");
 
-            //reading time (DEADLOCK HERE)
-            mangaLock.unlock();
+            //reading time
+            mangaLock.unlock(); //return the manga
             bookLock.unlock();
         }
 
