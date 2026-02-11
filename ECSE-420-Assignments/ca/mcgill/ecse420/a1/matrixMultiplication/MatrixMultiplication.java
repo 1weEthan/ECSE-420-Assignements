@@ -94,7 +94,8 @@ public class MatrixMultiplication {
 		try {
 			threadPool.invokeAll(tasks);
 			threadPool.shutdown();
-			threadPool.awaitTermination(1, TimeUnit.MINUTES); // arbitrary large time to clean up
+			while (!executor.isTerminated()) { // wait to be done
+			}
 		} catch(Exception e){
 			e.printStackTrace();
 			System.exit(1);
