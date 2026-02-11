@@ -45,7 +45,7 @@ public class MatrixMultiplication {
 		double[][] result = new double[a.length][a.length]; //assuming square matrix
 		// implement a matrix multiplication sequentially:
 		if (a[0].length != b.length) {
-				throw new IllegalArgumentException("Matrix lengths do not match");
+			throw new IllegalArgumentException("Matrix lengths do not match");
 		}
 		for (int i = 0; i < b[0].length; i++) {
 			for (int j = 0; j < a.length; j++) {
@@ -69,7 +69,7 @@ public class MatrixMultiplication {
 
 		// each task handles a range of rows
 		int rowsPerTask = a.length / NUMBER_THREADS;
-		rowsPerTask = (int)Math.floor(rowsPerTask);
+		rowsPerTask = (int) Math.floor(rowsPerTask);
 
 		List<Callable<Object>> tasks = new ArrayList<>();
 
@@ -102,20 +102,20 @@ public class MatrixMultiplication {
 
 	}
         
-        /**
-         * Populates a matrix of given size with randomly generated integers between 0-10.
-         * @param numRows number of rows
-         * @param numCols number of cols
-         * @return matrix
-         */
-		private static double[][] generateRandomMatrix(int numRows, int numCols) {
-			double matrix[][] = new double[numRows][numCols];
-			for (int row = 0; row < numRows; row++) {
-				for (int col = 0; col < numCols; col++) {
-					matrix[row][col] = (double) ((int) (Math.random() * 10.0));
-				}
+	/**
+	 * Populates a matrix of given size with randomly generated integers between 0-10.
+	 * @param numRows number of rows
+	 * @param numCols number of cols
+	 * @return matrix
+	 */
+	private static double[][] generateRandomMatrix(int numRows, int numCols) {
+		double matrix[][] = new double[numRows][numCols];
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numCols; col++) {
+				matrix[row][col] = (double) ((int) (Math.random() * 10.0));
 			}
-			return matrix;
 		}
+		return matrix;
+	}
 	
 }
