@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MatrixMultiplication {
 	
-	private static final int NUMBER_THREADS = 1; // snapdragon x plus
+	private static final int NUMBER_THREADS = 10;
 	private static final int MATRIX_SIZE = 2000;
 
 	public static void main(String[] args) {
@@ -22,9 +22,9 @@ public class MatrixMultiplication {
 		double[][] result = parallelMultiplyMatrix(a, b);
 		System.out.println("Parallel time with " + NUMBER_THREADS + " threads: " + (System.currentTimeMillis() - startTime) + "ms");
 
-		//startTime = System.currentTimeMillis();
-		//result = sequentialMultiplyMatrix(a, b);
-		//System.out.println("sequential time: "+ (System.currentTimeMillis() - startTime) + "ms");
+		startTime = System.currentTimeMillis();
+		result = sequentialMultiplyMatrix(a, b);
+		System.out.println("sequential time: "+ (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	

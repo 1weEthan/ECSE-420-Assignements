@@ -1,4 +1,4 @@
-package ca.mcgill.ecse420.a1.matrixMultiplication;
+package ca.mcgill.ecse420.a1;
 
 
 public class MatrixTask implements Runnable {
