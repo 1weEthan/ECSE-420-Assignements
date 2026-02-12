@@ -1,4 +1,4 @@
-package ca.mcgill.ecse420.a1;
+package ca.mcgill.ecse420.a1.diningPhilosophers.noStarvation;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,9 +18,9 @@ public class DiningPhilosophers {
 
 		for (int i = 0; i < numberOfPhilosophers; i++) {
 			if (i % 2 == 0) {
-				philosophers[i] = new Philosopher(chopsticks[i], chopsticks[(i + 1) % numberOfPhilosophers]);
+				philosophers[i] = new Philosopher(i, chopsticks[i], chopsticks[(i + 1) % numberOfPhilosophers]);
 			} else {
-				philosophers[i] = new Philosopher(chopsticks[(i + 1) % numberOfPhilosophers], chopsticks[i]);
+				philosophers[i] = new Philosopher(i, chopsticks[(i + 1) % numberOfPhilosophers], chopsticks[i]);
 			}
 		}
 
@@ -36,10 +36,14 @@ public class DiningPhilosophers {
 
 		private ReentrantLock firstChopstick;
 		private ReentrantLock secondChopstick;
+		private int count;
+		private int id;
 
-		public Philosopher(ReentrantLock first, ReentrantLock second) {
+		public Philosopher(int id, ReentrantLock first, ReentrantLock second) {
+			this.id = id;
 			this.firstChopstick = first;
 			this.secondChopstick = second;
+			this.count = 0;
 		}
 
 		@Override
@@ -70,6 +74,8 @@ public class DiningPhilosophers {
         }
 
         private void eat() throws InterruptedException {
+			count++;
+			System.out.println("Philosopher " + id + " ate " + count + " times.");
             Thread.sleep((int) (Math.random() * 10));
         }
 	}

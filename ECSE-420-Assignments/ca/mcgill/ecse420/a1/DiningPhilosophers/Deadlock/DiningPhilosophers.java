@@ -1,4 +1,4 @@
-package ca.mcgill.ecse420.a1;
+package ca.mcgill.ecse420.a1.diningPhilosophers.deadlock;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +17,7 @@ public class DiningPhilosophers {
 		}
 
 		for (int i = 0; i < numberOfPhilosophers; i++) {
-			philosophers[i] = new Philosopher(chopsticks[i], chopsticks[(i + 1) % numberOfPhilosophers]);
+			philosophers[i] = new Philosopher(i, chopsticks[i], chopsticks[(i + 1) % numberOfPhilosophers]);
 		}
 
 		ExecutorService executor = Executors.newFixedThreadPool(numberOfPhilosophers);
@@ -30,12 +30,16 @@ public class DiningPhilosophers {
 
 	public static class Philosopher implements Runnable {
 
+		private int id;
 		private Object leftChopstick;
 		private Object rightChopstick;
+		private int count;
 
-		public Philosopher(Object left, Object right) {
+		public Philosopher(int id, Object left, Object right) {
+			this.id = id;
 			this.leftChopstick = left;
 			this.rightChopstick = right;
+			this.count = 0;
 		}
 
 		@Override
@@ -45,7 +49,7 @@ public class DiningPhilosophers {
 					think();
 					synchronized (leftChopstick) {
 						synchronized (rightChopstick) {
-							eat()
+							eat();
 						}
 					}
 				} catch (InterruptedException e) {
@@ -60,6 +64,8 @@ public class DiningPhilosophers {
         }
 
         private void eat() throws InterruptedException {
+			count++;
+			System.out.println("Philosopher " + id + " ate " + count + " times.");
             Thread.sleep((int) (Math.random() * 10));
         }
 	}
