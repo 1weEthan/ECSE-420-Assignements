@@ -17,15 +17,8 @@ public class MatrixMultiplication {
 		double[][] a = generateRandomMatrix(MATRIX_SIZE, MATRIX_SIZE);
 		double[][] b = generateRandomMatrix(MATRIX_SIZE, MATRIX_SIZE);
 
-		// measure time for parallel multiplication
-		long startTime = System.currentTimeMillis();
-		double[][] result = parallelMultiplyMatrix(a, b);
-		System.out.println("Parallel time with " + NUMBER_THREADS + " threads: " + (System.currentTimeMillis() - startTime) + "ms");
+		measureTime(a, b);
 
-		// measure time for sequential multiplication
-		startTime = System.currentTimeMillis();
-		result = sequentialMultiplyMatrix(a, b);
-		System.out.println("sequential time: "+ (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	
@@ -134,6 +127,26 @@ public class MatrixMultiplication {
 
 			System.out.println(line.toString().trim());
 		}
+	}
+
+	/**
+	 * Measures and prints the execution time of both parallel and sequential
+	 * matrix multiplication using the provided input matrices.
+	 *
+	 * @param a the first input matrix
+ 	 * @param b the second input matrix
+	 */
+	private static void measureTime(double[][] a, double[][] b) {
+		// measure time for parallel nultiplication
+		long startTime = System.currentTimeMillis();
+		double[][] result = parallelMultiplyMatrix(a, b);
+		System.out.println("Parallel time with " + NUMBER_THREADS + " threads: " + (System.currentTimeMillis() - startTime) + "ms");
+
+		// measure time for sequential multiplication
+		startTime = System.currentTimeMillis();
+		result = sequentialMultiplyMatrix(a, b);
+		System.out.println("sequential time: "+ (System.currentTimeMillis() - startTime) + "ms");
+
 	}
 	
 }
