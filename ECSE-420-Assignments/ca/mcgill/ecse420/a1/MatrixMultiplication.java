@@ -1,10 +1,10 @@
 package ca.mcgill.ecse420.a1;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class MatrixMultiplication {
@@ -13,15 +13,16 @@ public class MatrixMultiplication {
 	private static final int MATRIX_SIZE = 2000;
 
 	public static void main(String[] args) {
-		// Generate two random matrices, same size
+		// Generate two random matrices of same size
 		double[][] a = generateRandomMatrix(MATRIX_SIZE, MATRIX_SIZE);
 		double[][] b = generateRandomMatrix(MATRIX_SIZE, MATRIX_SIZE);
 
-		//measure time of both sequential and parallel
+		// measure time for parallel multiplication
 		long startTime = System.currentTimeMillis();
 		double[][] result = parallelMultiplyMatrix(a, b);
 		System.out.println("Parallel time with " + NUMBER_THREADS + " threads: " + (System.currentTimeMillis() - startTime) + "ms");
 
+		// measure time for sequential multiplication
 		startTime = System.currentTimeMillis();
 		result = sequentialMultiplyMatrix(a, b);
 		System.out.println("sequential time: "+ (System.currentTimeMillis() - startTime) + "ms");
@@ -42,8 +43,8 @@ public class MatrixMultiplication {
 	 * */
 
 	public static double[][] sequentialMultiplyMatrix(double[][] a, double[][] b) {
-		double[][] result = new double[a.length][a.length]; //assuming square matrix
-		// implement a matrix multiplication sequentially:
+		double[][] result = new double[a.length][b[0].length];
+		// implement a matrix multiplication sequentially
 		if (a[0].length != b.length) {
 			throw new IllegalArgumentException("Matrix lengths do not match");
 		}
@@ -65,7 +66,7 @@ public class MatrixMultiplication {
 	 * @return the result of the multiplication
 	 * */
 	public static double[][] parallelMultiplyMatrix(double[][] a, double[][] b) {
-		double[][] result = new double[a.length][a.length]; //assuming square matrix
+		double[][] result = new double[a.length][b[0].length];
 
 		// each task handles a range of rows
 		int rowsPerTask = a.length / NUMBER_THREADS;
@@ -116,6 +117,23 @@ public class MatrixMultiplication {
 			}
 		}
 		return matrix;
+	}
+
+	/**
+	 * Prints the given matrix to standard output.
+	 *
+	 * @param matrix the matrix to print
+	 */
+	private static void printMatrix(double[][] matrix) {
+		for (double[] row : matrix) {
+			StringBuilder line = new StringBuilder();
+
+			for (double value : row) {
+				line.append(String.format("%.2f ", value));
+			}
+
+			System.out.println(line.toString().trim());
+		}
 	}
 	
 }

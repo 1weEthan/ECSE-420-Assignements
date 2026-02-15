@@ -1,10 +1,8 @@
 package ca.mcgill.ecse420.a1;
 
-import java.util.concurrent.*;
-import java.util.concurrent.locks.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.*;
 
 public class DeadlockLibrary {
 
@@ -49,6 +47,7 @@ public class DeadlockLibrary {
             bookLock.unlock(); // return the book
 
         }
+        
         public void borrowMangaandBook() {
             mangaLock.lock(); // Acquire the lock
             System.out.println(Thread.currentThread().getName() + ": Locked Manga");
