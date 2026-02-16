@@ -30,9 +30,7 @@ public class MatrixMultiplication {
 	 * @return the result of the multiplication
 	 *
 	 *
-	 * Explain how you validate the method produces the correct results.
-	 * I iterated through the for loops with an example matrix to see if all the calculations were made corretly
-	 * I repeated for different size of matrix
+	 *
 	 * */
 
 	public static double[][] sequentialMultiplyMatrix(double[][] a, double[][] b) {
