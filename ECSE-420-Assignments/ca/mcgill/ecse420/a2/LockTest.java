@@ -14,7 +14,8 @@ public class LockTest {
 
     private static void runTest(int n) throws InterruptedException {
         counter = 0;
-        Filterlock lock = new Filterlock(n); 
+        //Filterlock lock = new Filterlock(n); 
+        BakeryLock lock = new BakeryLock(n); 
         Thread[] threads = new Thread[n];
 
         for (int i = 0; i < n; i++) {
@@ -37,10 +38,11 @@ public class LockTest {
 
     static class CounterTask implements Runnable {
         private final int threadId;
-        private final Filterlock lock;
+        //private final Filterlock lock;
+        private final BakeryLock lock;
         private final int iterations;
 
-        public CounterTask(int threadId, Filterlock lock, int iterations) {
+        public CounterTask(int threadId, /*Filterlock*/BakeryLock lock, int iterations) {
             this.threadId = threadId;
             this.lock = lock;
             this.iterations = iterations;

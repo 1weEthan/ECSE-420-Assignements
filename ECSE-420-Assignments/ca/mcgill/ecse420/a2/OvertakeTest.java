@@ -4,15 +4,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 
 public class OvertakeTest {
-    // Use CopyOnWriteArrayList or Collections.synchronizedList to avoid race conditions in the log
+    
     public static List<String> log = new CopyOnWriteArrayList<>();
 
     static class OvertakeTask implements Runnable {
         int threadId;
-        Filterlock lock;
+        //Filterlock lock;
+        BakeryLock lock;
         int iterations = 3; // Let threads try multiple times to see overtaking
 
-        public OvertakeTask(int threadId, Filterlock lock) { 
+        public OvertakeTask(int threadId, /*Filterlock*/ BakeryLock lock) { 
             this.threadId = threadId; 
             this.lock = lock; 
         }
@@ -37,7 +38,8 @@ public class OvertakeTest {
 
     public static void main(String[] args) throws InterruptedException {
         int n = 8;
-        Filterlock lock = new Filterlock(n);
+        //Filterlock lock = new Filterlock(n);
+        BakeryLock lock = new BakeryLock(n);
         Thread[] threadObjects = new Thread[n];
 
         for (int i = 0; i < n; i++) {
@@ -47,7 +49,7 @@ public class OvertakeTest {
         
         for (Thread t : threadObjects) { t.join(); }
 
-        // Analyze the logS
+        
         for (String event : log) { System.out.println(event); }
     }
 }
