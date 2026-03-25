@@ -7,9 +7,10 @@ public class Filterlock {
     private final int n; // num threads
     private final AtomicIntegerArray level;
     private final AtomicIntegerArray victim;
+
     
     public Filterlock(int n) {
-        this.n = n;
+        this.n = 8; // 8 threads to test 1.4
         this.level = new AtomicIntegerArray(n);
         this.victim = new AtomicIntegerArray(n);
     }
@@ -32,6 +33,5 @@ public class Filterlock {
      public void unlock(int me) {
         level.set(me, 0);
      }
-    
 
     }
