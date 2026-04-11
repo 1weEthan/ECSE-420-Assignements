@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 
 public class Question4 {
 
-    private static final int MINIMUM = 10;
+    private static final int MINIMUM = 1000;
     private static final ExecutorService exec = Executors.newCachedThreadPool();
     private static final Random rand = new Random();
 
@@ -100,8 +100,6 @@ public class Question4 {
         Future<?> future = exec.submit(new MultiplyTask(matrix, vector, result, 0, n));
         future.get();
 
-        exec.shutdown();
-
         return result;
     }
 
@@ -151,6 +149,8 @@ public class Question4 {
 
     public static void main(String[] args) throws Exception{
 
+        System.out.println("Processors: " + Runtime.getRuntime().availableProcessors());
+
         int[] sizes = new int[]{100, 500, 1000, 2000, 4000};
 
         for (int n: sizes) {
@@ -165,7 +165,7 @@ public class Question4 {
             double[] sequentialResult = multiplySequential(matrix, vector);
             long end = System.nanoTime();
 
-            double seqTime = (end - start) / 1000000;
+            double seqTime = (end - start) / 1e6;
             System.out.println("Sequential Time: " + seqTime + " ms");
 
             // Parallel
@@ -173,7 +173,7 @@ public class Question4 {
             double[] parallelResult = multiplyParallel(matrix, vector);
             end = System.nanoTime();
 
-            double parTime = (end - start) / 1000000;
+            double parTime = (end - start) / 1e6;
             System.out.println("Parallel Time: " + parTime + " ms");
 
             // Speedup
@@ -184,5 +184,7 @@ public class Question4 {
                 System.out.println("Results do not match.");
             }
         }
+
+        exec.shutdown();
     }
 }
