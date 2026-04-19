@@ -43,4 +43,35 @@ public class FineGrainedList<T> {
             pred.lock.unlock(); // Always release pred
         }
     }
+
+    // Adds an item to the list in sorted order (by hashCode)
+    public boolean add(T item) {
+        int key = item.hashCode();
+        head.lock.lock();
+        Node pred = head;
+        try {
+            Node curr = pred.next;
+            curr.lock.lock();
+            try {
+                while (curr.key < key) {
+                    pred.lock.unlock();
+                    pred = curr;
+                    curr = curr.next;
+                    curr.lock.lock();
+                }
+                if (curr.key == key) {
+                    return false; // already present
+                }
+                Node newNode = new Node(key);
+                newNode.item = item;
+                newNode.next = curr;
+                pred.next = newNode;
+                return true;
+            } finally {
+                curr.lock.unlock();
+            }
+        } finally {
+            pred.lock.unlock();
+        }
+    }
 }
